@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mentions légales & Politique de confidentialité — NaoWin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Cinzel:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rouge:  #c42a3e;
+  --or:     #fcc653;
+  --vert:   #52956a;
+  --clair:  #faf6ee;
+  --sombre: #1c1008;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--clair);
+  color: var(--sombre);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ── NAV ── */
+nav {
+  background: rgba(28,16,8,0.97);
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(252,198,83,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.nav-logo .nao { color: var(--rouge); }
+.nav-logo .win { color: var(--vert); }
+.nav-back {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(250,246,238,0.45);
+  text-decoration: none;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-back:hover { color: var(--or); }
+.nav-back::before { content: '←'; }
+
+/* ── HERO ── */
+.page-hero {
+  background: var(--sombre);
+  padding: 56px 24px 48px;
+  border-bottom: 1px solid rgba(252,198,83,0.1);
+}
+.page-hero-eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--or);
+  margin-bottom: 16px;
+}
+.page-hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 8vw, 44px);
+  font-weight: 600;
+  color: var(--clair);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.page-hero-title em { font-style: italic; color: var(--or); }
+.page-hero-date {
+  font-size: 12px;
+  color: rgba(250,246,238,0.3);
+  letter-spacing: 0.1em;
+}
+
+/* ── SOMMAIRE ── */
+.toc {
+  padding: 32px 24px;
+  background: white;
+  border-bottom: 1px solid rgba(28,16,8,0.07);
+}
+.toc-title {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(28,16,8,0.35);
+  margin-bottom: 16px;
+}
+.toc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.toc-list a {
+  font-size: 14px;
+  color: var(--rouge);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: color 0.2s;
+}
+.toc-list a:hover { color: var(--sombre); }
+.toc-list a::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 1px;
+  background: var(--or);
+  flex-shrink: 0;
+}
+
+/* ── CONTENT ── */
+.legal-content {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+.legal-section {
+  padding: 48px 0 0;
+  border-top: 1px solid rgba(28,16,8,0.06);
+  margin-top: 48px;
+}
+.legal-section:first-child { margin-top: 48px; border-top: none; }
+
+.legal-section-num {
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(28,16,8,0.3);
+  margin-bottom: 8px;
+}
+.legal-section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--sombre);
+  margin-bottom: 24px;
+  line-height: 1.25;
+}
+
+.legal-h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sombre);
+  letter-spacing: 0.05em;
+  margin: 24px 0 10px;
+  padding-left: 12px;
+  border-left: 2px solid var(--or);
+}
+
+.legal-p {
+  font-size: 15px;
+  color: rgba(28,16,8,0.7);
+  line-height: 1.75;
+  margin-bottom: 14px;
+}
+
+.legal-placeholder {
+  display: inline;
+  background: rgba(252,198,83,0.25);
+  border: 1px dashed rgba(252,198,83,0.6);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-style: italic;
+  color: var(--sombre);
+  font-size: 14px;
+}
+
+.legal-ul {
+  list-style: none;
+  margin: 14px 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.legal-ul li {
+  font-size: 14px;
+  color: rgba(28,16,8,0.65);
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.65;
+}
+.legal-ul li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--or);
+}
+
+.legal-highlight {
+  background: rgba(252,198,83,0.08);
+  border: 1px solid rgba(252,198,83,0.2);
+  padding: 20px 20px;
+  margin: 20px 0;
+  border-radius: 2px;
+}
+.legal-highlight p {
+  font-size: 14px;
+  color: rgba(28,16,8,0.65);
+  line-height: 1.7;
+}
+.legal-highlight strong { color: var(--sombre); font-weight: 500; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--sombre);
+  padding: 32px 24px;
+  border-top: 1px solid rgba(252,198,83,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.footer-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.footer-logo .nao { color: var(--rouge); }
+.footer-logo .win { color: var(--vert); }
+.footer-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(250,246,238,0.3);
+}
+.footer-back {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(250,246,238,0.35);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-back:hover { color: var(--or); }
+.footer-legal {
+  font-size: 10px;
+  color: rgba(250,246,238,0.18);
+  line-height: 1.8;
+  margin-top: 8px;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo"><span class="nao">NAO</span><span class="win">WIN</span></a>
+  <a href="index.html" class="nav-back">Retour au site</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <p class="page-hero-eyebrow">Informations légales</p>
+  <h1 class="page-hero-title">Mentions légales &<br><em>Confidentialité</em></h1>
+  <p class="page-hero-date">Dernière mise à jour : avril 2026</p>
+</div>
+
+<!-- SOMMAIRE -->
+<div class="toc">
+  <p class="toc-title">Sommaire</p>
+  <ul class="toc-list">
+    <li><a href="#editeur">Éditeur du site</a></li>
+    <li><a href="#hebergement">Hébergement</a></li>
+    <li><a href="#propriete">Propriété intellectuelle</a></li>
+    <li><a href="#donnees">Données personnelles (RGPD)</a></li>
+    <li><a href="#cookies">Cookies</a></li>
+    <li><a href="#responsabilite">Limitation de responsabilité</a></li>
+    <li><a href="#contact">Contact & droits</a></li>
+  </ul>
+</div>
+
+<!-- CONTENT -->
+<div class="legal-content">
+
+  <!-- 1. Éditeur -->
+  <div class="legal-section" id="editeur">
+    <p class="legal-section-num">01</p>
+    <h2 class="legal-section-title">Éditeur du site</h2>
+    <p class="legal-p">Le site <strong>naowin.fr</strong> est édité par :</p>
+    <div class="legal-highlight">
+      <p>
+        <strong>Nom :</strong> Naomie VERGER<br>
+        <strong>Statut :</strong> Auto-entrepreneur<br>
+        <strong>SIRET :</strong> 918 749 367 00036<br>
+        <strong>Adresse :</strong> Bessan, 34550 — Hérault<br>
+        <strong>Email :</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="87e9e6e8a9f0eee9a9f1e2f5c7e0eae6eeeba9e4e8ea">[email&#160;protected]</a><br>
+        <strong>Directrice de publication :</strong> Naomie VERGER
+      </p>
+    </div>
+  </div>
+
+  <!-- 2. Hébergement -->
+  <div class="legal-section" id="hebergement">
+    <p class="legal-section-num">02</p>
+    <h2 class="legal-section-title">Hébergement</h2>
+    <div class="legal-highlight">
+      <p>
+        <strong>Hébergeur :</strong> Netlify, Inc.<br>
+        <strong>Adresse :</strong> 512 2nd Street, Suite 200, San Francisco, CA 94107, États-Unis<br>
+        <strong>Site web :</strong> <a href="https://www.netlify.com" style="color:var(--rouge);">www.netlify.com</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- 3. Propriété intellectuelle -->
+  <div class="legal-section" id="propriete">
+    <p class="legal-section-num">03</p>
+    <h2 class="legal-section-title">Propriété intellectuelle</h2>
+    <p class="legal-p">L'ensemble du contenu du site NaoWin — textes, visuels, logos, photographies, structure — est protégé par le droit d'auteur et appartient à Naomie VERGER, sauf mention contraire.</p>
+    <p class="legal-p">Toute reproduction, distribution, modification ou utilisation à des fins commerciales, totale ou partielle, sans autorisation écrite préalable est strictement interdite.</p>
+    <p class="legal-p">Les logos des clients (RH Connect, Forma-Tex, Verger Solutions) sont la propriété de leurs détenteurs respectifs et sont utilisés avec leur accord.</p>
+  </div>
+
+  <!-- 4. Données personnelles -->
+  <div class="legal-section" id="donnees">
+    <p class="legal-section-num">04</p>
+    <h2 class="legal-section-title">Données personnelles (RGPD)</h2>
+    <p class="legal-p">Conformément au Règlement Général sur la Protection des Données (RGPD — UE 2016/679) et à la loi Informatique et Libertés, vous disposez de droits sur vos données personnelles.</p>
+
+    <h3 class="legal-h3">Données collectées</h3>
+    <p class="legal-p">Le site collecte les données suivantes via ses formulaires :</p>
+    <ul class="legal-ul">
+      <li>Prénom et nom</li>
+      <li>Adresse email</li>
+      <li>Lien vers votre profil LinkedIn (formulaire audit)</li>
+      <li>Message libre (formulaire de contact)</li>
+    </ul>
+
+    <h3 class="legal-h3">Finalité du traitement</h3>
+    <ul class="legal-ul">
+      <li>Répondre à vos demandes de contact</li>
+      <li>Envoyer le mini-audit LinkedIn offert</li>
+      <li>Vous adresser des communications marketing si vous y avez consenti (newsletter)</li>
+    </ul>
+
+    <h3 class="legal-h3">Base légale</h3>
+    <ul class="legal-ul">
+      <li>Votre consentement explicite (formulaires d'inscription)</li>
+      <li>L'intérêt légitime pour le traitement des demandes de contact</li>
+    </ul>
+
+    <h3 class="legal-h3">Durée de conservation</h3>
+    <p class="legal-p">Vos données sont conservées :</p>
+    <ul class="legal-ul">
+      <li><strong>Contacts :</strong> 3 ans à compter du dernier échange</li>
+      <li><strong>Abonnés newsletter :</strong> jusqu'à désinscription</li>
+      <li><strong>Données de navigation :</strong> 13 mois maximum</li>
+    </ul>
+
+    <h3 class="legal-h3">Destinataires des données</h3>
+    <p class="legal-p">Vos données ne sont jamais vendues ni cédées à des tiers. Elles peuvent être partagées avec :</p>
+    <ul class="legal-ul">
+      <li><strong>Systeme.io</strong> — outil d'emailing (hébergé en Europe)</li>
+      <li>Les autorités compétentes, en cas d'obligation légale</li>
+    </ul>
+
+    <h3 class="legal-h3">Vos droits</h3>
+    <p class="legal-p">Conformément au RGPD, vous disposez des droits suivants :</p>
+    <ul class="legal-ul">
+      <li><strong>Droit d'accès</strong> — obtenir une copie de vos données</li>
+      <li><strong>Droit de rectification</strong> — corriger des données inexactes</li>
+      <li><strong>Droit à l'effacement</strong> — demander la suppression de vos données</li>
+      <li><strong>Droit d'opposition</strong> — s'opposer au traitement à des fins de prospection</li>
+      <li><strong>Droit à la portabilité</strong> — recevoir vos données dans un format lisible</li>
+      <li><strong>Droit de retirer votre consentement</strong> à tout moment</li>
+    </ul>
+    <p class="legal-p">Pour exercer ces droits, contactez : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2749464809504e490951425567404a464e4b0944484a">[email&#160;protected]</a></p>
+    <p class="legal-p">En cas de litige non résolu, vous pouvez introduire une réclamation auprès de la <strong>CNIL</strong> (Commission Nationale de l'Informatique et des Libertés) — <a href="https://www.cnil.fr" style="color:var(--rouge);">www.cnil.fr</a>.</p>
+  </div>
+
+  <!-- 5. Cookies -->
+  <div class="legal-section" id="cookies">
+    <p class="legal-section-num">05</p>
+    <h2 class="legal-section-title">Cookies</h2>
+    <p class="legal-p">Le site NaoWin utilise des cookies fonctionnels strictement nécessaires au bon fonctionnement du site (mémorisation de préférences, session). Aucun cookie publicitaire ou de tracking tiers n'est utilisé.</p>
+    <ul class="legal-ul">
+      <li><strong>Cookies fonctionnels :</strong> ne requièrent pas votre consentement</li>
+      <li><strong>Cookies analytics :</strong> <span class="legal-placeholder">à compléter selon votre outil</span></li>
+    </ul>
+    <p class="legal-p">Vous pouvez configurer votre navigateur pour refuser les cookies. Cela peut affecter certaines fonctionnalités du site.</p>
+  </div>
+
+  <!-- 6. Responsabilité -->
+  <div class="legal-section" id="responsabilite">
+    <p class="legal-section-num">06</p>
+    <h2 class="legal-section-title">Limitation de responsabilité</h2>
+    <p class="legal-p">Naomie VERGER (NaoWin) s'efforce de maintenir les informations publiées à jour et exactes. Toutefois, des erreurs ou omissions peuvent survenir. La responsabilité de NaoWin ne saurait être engagée pour tout dommage résultant de l'utilisation des informations présentes sur ce site.</p>
+    <p class="legal-p">Des liens hypertextes vers des sites tiers peuvent figurer sur ce site. NaoWin ne contrôle pas ces sites et décline toute responsabilité quant à leur contenu.</p>
+  </div>
+
+  <!-- 7. Contact -->
+  <div class="legal-section" id="contact">
+    <p class="legal-section-num">07</p>
+    <h2 class="legal-section-title">Contact & droits</h2>
+    <p class="legal-p">Pour toute question relative à vos données personnelles ou pour exercer vos droits, contactez Naomie VERGER :</p>
+    <div class="legal-highlight">
+      <p>
+        <strong>Par email :</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="422c232d6c352b2c6c34273002252f232b2e6c212d2f">[email&#160;protected]</a><br>
+        <strong>Par courrier :</strong> Naomie VERGER — Bessan, 34550<br>
+        <strong>Délai de réponse :</strong> sous 30 jours
+      </p>
+    </div>
+    <p class="legal-p" style="margin-top:24px; font-size:13px; color:rgba(28,16,8,0.4);">Ces mentions légales sont susceptibles d'être modifiées à tout moment. La version en vigueur est celle accessible sur cette page.</p>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span class="nao">NAO</span><span class="win">WIN</span></div>
+  <p class="footer-tagline">Des mots qui convertissent, une voix qui vous ressemble</p>
+  <a href="index.html" class="footer-back">← Retour au site</a>
+  <p class="footer-legal">© 2025 NaoWin · Hérault, Occitanie<br>Mentions légales · Politique de confidentialité</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
