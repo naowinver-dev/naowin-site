@@ -6,47 +6,50 @@
 <title>Mentions légales & Politique de confidentialité — NaoWin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Cinzel:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cinzel:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --rouge:  #c42a3e;
+  --rouge:  #9d2131;
   --or:     #fcc653;
-  --vert:   #52956a;
+  --vert:   #3d6b4f;
   --clair:  #faf6ee;
   --sombre: #1c1008;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
   background: var(--clair);
   color: var(--sombre);
   font-family: 'DM Sans', sans-serif;
   font-size: 16px;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 /* ── NAV ── */
 nav {
-  background: rgba(28,16,8,0.97);
+  background: rgba(28,16,8,0.93);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 0 20px;
-  height: 60px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(252,198,83,0.15);
+  border-bottom: 1px solid rgba(252,198,83,0.12);
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 1000;
 }
 .nav-logo {
   font-family: 'Cinzel', serif;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.1em;
   text-decoration: none;
   text-transform: uppercase;
+  line-height: 1;
 }
 .nav-logo .nao { color: #d44a5d; }
 .nav-logo .win { color: #6ba585; }
@@ -227,6 +230,14 @@ nav {
   line-height: 1.8;
 }
 .legal-highlight strong { color: var(--sombre); font-weight: 700; }
+.legal-p a, .legal-highlight a {
+  color: var(--rouge);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.legal-p a:hover, .legal-highlight a:hover { color: var(--vert); }
 
 /* ── FOOTER ── */
 footer {
@@ -239,10 +250,11 @@ footer {
 }
 .footer-logo {
   font-family: 'Cinzel', serif;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  line-height: 1;
 }
 .footer-logo .nao { color: #d44a5d; }
 .footer-logo .win { color: #6ba585; }
@@ -264,10 +276,17 @@ footer {
 .footer-back:hover { color: var(--or); }
 .footer-legal {
   font-size: 13px;
-  color: rgba(250,246,238,0.7);
+  color: rgba(250,246,238,0.85);
   line-height: 1.8;
   margin-top: 8px;
 }
+.footer-legal a {
+  color: rgba(250,246,238,0.85);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+.footer-legal a:hover { color: var(--or); }
 </style>
 </head>
 <body>
@@ -313,7 +332,7 @@ footer {
         <strong>Statut :</strong> Auto-entrepreneur<br>
         <strong>SIRET :</strong> 918 749 367 00036<br>
         <strong>Adresse :</strong> Bessan, 34550 — Hérault<br>
-        <strong>Email :</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="87e9e6e8a9f0eee9a9f1e2f5c7e0eae6eeeba9e4e8ea">[email&#160;protected]</a><br>
+        <strong>Email :</strong> <a href="mailto:nao.win.ver@gmail.com">nao.win.ver@gmail.com</a><br>
         <strong>Directrice de publication :</strong> Naomie VERGER
       </p>
     </div>
@@ -394,7 +413,7 @@ footer {
       <li><strong>Droit à la portabilité</strong> — recevoir vos données dans un format lisible</li>
       <li><strong>Droit de retirer votre consentement</strong> à tout moment</li>
     </ul>
-    <p class="legal-p">Pour exercer ces droits, contactez : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2749464809504e490951425567404a464e4b0944484a">[email&#160;protected]</a></p>
+    <p class="legal-p">Pour exercer ces droits, contactez : <a href="mailto:nao.win.ver@gmail.com">nao.win.ver@gmail.com</a></p>
     <p class="legal-p">En cas de litige non résolu, vous pouvez introduire une réclamation auprès de la <strong>CNIL</strong> (Commission Nationale de l'Informatique et des Libertés) — <a href="https://www.cnil.fr" style="color:var(--rouge);">www.cnil.fr</a>.</p>
   </div>
 
@@ -425,7 +444,7 @@ footer {
     <p class="legal-p">Pour toute question relative à vos données personnelles ou pour exercer vos droits, contactez Naomie VERGER :</p>
     <div class="legal-highlight">
       <p>
-        <strong>Par email :</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="422c232d6c352b2c6c34273002252f232b2e6c212d2f">[email&#160;protected]</a><br>
+        <strong>Par email :</strong> <a href="mailto:nao.win.ver@gmail.com">nao.win.ver@gmail.com</a><br>
         <strong>Par courrier :</strong> Naomie VERGER — Bessan, 34550<br>
         <strong>Délai de réponse :</strong> sous 30 jours
       </p>
@@ -440,7 +459,7 @@ footer {
   <div class="footer-logo"><span class="nao">NAO</span><span class="win">WIN</span></div>
   <p class="footer-tagline">Des mots qui convertissent, une voix qui vous ressemble</p>
   <a href="index.html" class="footer-back">← Retour au site</a>
-  <p class="footer-legal">© 2025 NaoWin · Hérault, Occitanie<br>Mentions légales · Politique de confidentialité</p>
+  <p class="footer-legal">© 2026 NaoWin · Tous droits réservés<br>Formée par <a href="https://copymastery.fr" target="_blank" rel="noopener">Copymastery</a> · Hérault, Sud de France</p>
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
