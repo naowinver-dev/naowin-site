@@ -1351,4 +1351,142 @@
     if (!toggle.contains(e.target) && !menu.contains(e.target)) closeMenu();
   });
 
-  /* ── Nav scrolled state
+  /* ── Nav scrolled state ── */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.borderBottomColor = window.scrollY > 60
+      ? 'rgba(252,198,83,0.22)'
+      : 'rgba(252,198,83,0.12)';
+  }, { passive: true });
+
+  /* ── Validation ── */
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+  function showError(input, msg) {
+    clearError(input);
+    input.style.borderColor = '#e85c6e';
+    const span = document.createElement('span');
+    span.className = 'field-error';
+    span.textContent = msg;
+    input.parentNode.appendChild(span);
+  }
+  function clearError(input) {
+    const existing = input.parentNode.querySelector('.field-error');
+    if (existing) existing.remove();
+    input.style.borderColor = '';
+  }
+  function clearErrors(form) {
+    form.querySelectorAll('input, textarea, select').forEach(clearError);
+  }
+
+  /* ── Formulaire audit (connecté à Brevo via iframe cachée) ── */
+  const auditForm    = document.getElementById('auditForm');
+  const auditSuccess = document.getElementById('auditSuccess');
+  const brevoIframe  = document.getElementById('brevo-target');
+  let brevoSubmissionPending = false;
+
+  auditForm.addEventListener('submit', function(e) {
+    clearErrors(this);
+    const prenom   = this.querySelector('#audit-prenom');
+    const email    = this.querySelector('#audit-email');
+    const linkedin = this.querySelector('#audit-linkedin');
+    let valid = true;
+
+    if (!prenom.value.trim()) {
+      showError(prenom, 'Merci d\'entrer votre prénom.');
+      valid = false;
+    }
+    if (!isValidEmail(email.value)) {
+      showError(email, 'Adresse email invalide.');
+      valid = false;
+    }
+    if (linkedin && linkedin.value.trim() && !/linkedin\.com/i.test(linkedin.value)) {
+      showError(linkedin, 'URL LinkedIn invalide (ex. : https://linkedin.com/in/votre-profil).');
+      valid = false;
+    }
+
+    if (!valid) {
+      e.preventDefault();
+      return;
+    }
+
+    brevoSubmissionPending = true;
+  });
+
+  if (brevoIframe) {
+    brevoIframe.addEventListener('load', function() {
+      if (brevoSubmissionPending) {
+        brevoSubmissionPending = false;
+        auditForm.style.display = 'none';
+        auditSuccess.style.display = 'block';
+      }
+    });
+  }
+
+  /* ── Formulaire contact (connecté à Formspree en AJAX) ── */
+  const contactForm    = document.getElementById('contactForm');
+  const contactSuccess = document.getElementById('contactSuccess');
+  const submitBtn      = contactForm.querySelector('button[type="submit"]');
+  const submitBtnDefault = submitBtn ? submitBtn.textContent : '';
+
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    clearErrors(this);
+    const nom     = this.querySelector('#contact-nom');
+    const email   = this.querySelector('#contact-email');
+    const message = this.querySelector('#contact-message');
+    let valid = true;
+
+    if (!nom.value.trim()) {
+      showError(nom, 'Merci d\'entrer votre nom.');
+      valid = false;
+    }
+    if (!isValidEmail(email.value)) {
+      showError(email, 'Adresse email invalide.');
+      valid = false;
+    }
+    if (message.value.trim().length < 20) {
+      showError(message, 'Merci de décrire votre projet (20 caractères minimum).');
+      valid = false;
+    }
+    if (!valid) return;
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Envoi en cours…';
+    }
+
+    try {
+      const formData = new FormData(this);
+      const response = await fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        contactForm.style.display = 'none';
+        contactSuccess.style.display = 'block';
+      } else {
+        const data = await response.json().catch(() => ({}));
+        const errorMsg = (data && data.errors && data.errors[0] && data.errors[0].message)
+          ? data.errors[0].message
+          : 'Une erreur est survenue. Réessayez ou écrivez-moi directement à nao.win.ver@gmail.com.';
+        showError(message, errorMsg);
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = submitBtnDefault;
+        }
+      }
+    } catch (err) {
+      showError(message, 'Problème de connexion. Réessayez ou écrivez-moi directement à nao.win.ver@gmail.com.');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = submitBtnDefault;
+      }
+    }
+  });
+</script>
+</body>
+</html>
