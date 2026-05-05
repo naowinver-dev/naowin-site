@@ -564,6 +564,110 @@
     }
 
     /* ════════════════════════════
+       MON PARCOURS / COPYMASTERY
+    ════════════════════════════ */
+    .parcours {
+      background: linear-gradient(180deg, var(--clair) 0%, #f3ebd9 100%);
+      text-align: center;
+    }
+    .parcours-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .parcours-lead {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--sombre);
+      margin: 28px 0 18px;
+    }
+    .parcours-lead strong {
+      color: var(--rouge);
+      font-weight: 600;
+    }
+    .parcours-text {
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(28,16,8,0.78);
+      margin-bottom: 36px;
+    }
+    .parcours-text em {
+      color: var(--rouge);
+      font-style: italic;
+    }
+    .parcours-ctas {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .parcours-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 24px 22px 26px;
+      border-radius: 4px;
+      text-decoration: none;
+      text-align: left;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .parcours-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(28,16,8,0.12);
+    }
+    .parcours-cta-light {
+      background: #fff;
+      border: 1px solid rgba(252,198,83,0.55);
+      color: var(--sombre);
+    }
+    .parcours-cta-strong {
+      background: var(--rouge);
+      color: var(--clair);
+    }
+    .parcours-cta-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+    .parcours-cta-light .parcours-cta-eyebrow { color: var(--vert); }
+    .parcours-cta-strong .parcours-cta-eyebrow { color: var(--or); }
+    .parcours-cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 1.15;
+    }
+    .parcours-cta-desc {
+      font-size: 14px;
+      line-height: 1.55;
+      opacity: 0.86;
+    }
+    .parcours-cta-arrow {
+      position: absolute;
+      bottom: 22px;
+      right: 20px;
+      font-size: 22px;
+      transition: transform 0.2s;
+    }
+    .parcours-cta:hover .parcours-cta-arrow { transform: translateX(4px); }
+    .parcours-disclosure {
+      font-size: 12px;
+      color: rgba(28,16,8,0.55);
+      font-style: italic;
+      margin-top: 8px;
+    }
+
+    @media (min-width: 720px) {
+      .parcours-ctas {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+    }
+
+    /* ════════════════════════════
        PROCESSUS
     ════════════════════════════ */
     .process {
@@ -1122,6 +1226,36 @@
   </div>
 </section>
 
+<!-- ═══════════════ MON PARCOURS / COPYMASTERY ═══════════════ -->
+<section class="section parcours" id="parcours" aria-label="Mon parcours et la formation Copymastery">
+  <div class="parcours-inner">
+    <span class="section-label">Mon parcours</span>
+    <h2 class="section-h2">Comment je suis <em>devenue</em> copywriter</h2>
+    <div class="divider-or"><div class="divider-or-dot"></div></div>
+
+    <p class="parcours-lead">Je n'ai pas appris le copywriting toute seule. Je me suis formée chez <strong>Copymastery</strong> — le programme francophone de référence, celui qui enseigne la psychologie de vente, la structure des pages qui convertissent, et la posture professionnelle d'un copywriter qui peut <em>réellement</em> vivre de son métier.</p>
+
+    <p class="parcours-text">Si vous lisez ces lignes, c'est peut-être que vous vous posez la question : <em>« et si moi aussi, je pouvais le faire ? »</em>. La réponse est oui — à condition de se former sérieusement, pas avec trois articles de blog gratuits.</p>
+
+    <div class="parcours-ctas">
+      <a href="https://www.les-copywriters.com/formation-gratuite?el=naomie-winum" class="parcours-cta parcours-cta-light" target="_blank" rel="noopener sponsored">
+        <span class="parcours-cta-eyebrow">✦ Curieuse</span>
+        <span class="parcours-cta-title">Masterclass gratuite</span>
+        <span class="parcours-cta-desc">Comprendre le métier, le marché, la méthode — sans engagement.</span>
+        <span class="parcours-cta-arrow">→</span>
+      </a>
+      <a href="https://www.les-copywriters.com/copymastery?el=naomie-winum" class="parcours-cta parcours-cta-strong" target="_blank" rel="noopener sponsored">
+        <span class="parcours-cta-eyebrow">✦ Prête à passer à l'action</span>
+        <span class="parcours-cta-title">Le programme complet</span>
+        <span class="parcours-cta-desc">La formation qui m'a permis de quitter le salariat pour vivre du copywriting.</span>
+        <span class="parcours-cta-arrow">→</span>
+      </a>
+    </div>
+
+    <p class="parcours-disclosure">Liens d'affiliation. Si vous vous inscrivez via mon parrainage, vous soutenez NaoWin — sans payer plus cher.</p>
+  </div>
+</section>
+
 <!-- ═══════════════ PROCESSUS ═══════════════ -->
 <section class="process" id="processus" aria-label="Comment je travaille">
   <div class="process-bg" role="img" aria-label="Vignes sur pierre, Hérault"></div>
@@ -1315,7 +1449,7 @@
   </div>
   <div class="footer-bottom">
     <p>© 2026 NaoWin · Tous droits réservés · <a href="mentions-legales.html">Mentions légales</a></p>
-    <p>Formée par <a href="https://copymastery.fr" target="_blank" rel="noopener">Copymastery</a> · Hérault, Sud de France</p>
+    <p>Formée par <a href="https://www.les-copywriters.com/copymastery?el=naomie-winum" target="_blank" rel="noopener sponsored">Copymastery</a> · Hérault, Sud de France</p>
   </div>
 </footer>
 
