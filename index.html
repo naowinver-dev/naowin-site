@@ -715,6 +715,15 @@
     }
     .form-field-dark label { color: rgba(250,246,238,0.85); }
     .form-field-light label { color: #4a3424; }
+    .form-field-full { margin-bottom: 12px; }
+    .label-optional {
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: none;
+      font-size: 11px;
+      color: rgba(250,246,238,0.55);
+      margin-left: 6px;
+    }
 
     .form-input {
       font-family: 'DM Sans', sans-serif;
@@ -1149,12 +1158,11 @@
 <!-- ═══════════════ LEAD MAGNET ═══════════════ -->
 <!--
   ════════════════════════════════════════════════
-  INTÉGRATION SYSTEME.IO
-  1. Créez un funnel "optin" dans systeme.io
-  2. Dans les paramètres du formulaire, copiez l'URL d'action
-  3. Remplacez action="#SYSTEME_IO_FORM_URL" par cette URL
-  4. Vérifiez les noms des champs : firstname et email
-  5. Ajoutez vos tags / séquences dans systeme.io
+  INTÉGRATION BREVO
+  Le formulaire envoie ses données à Brevo via une iframe cachée
+  (target="brevo-target") pour que l'utilisateur reste sur naowin.fr.
+  Le scénario d'automatisation Brevo (liste "Audit LinkedIn") déclenche
+  la séquence de 3 emails (J+0, J+3, J+7).
   ════════════════════════════════════════════════
 -->
 <section class="section leadmag" id="audit">
@@ -1169,18 +1177,31 @@
       <li>Recommandations personnalisées envoyées sous 24h</li>
     </ul>
 
-    <form class="leadmag-form" action="#SYSTEME_IO_FORM_URL" method="POST" id="auditForm" novalidate>
-      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <form class="leadmag-form"
+          action="https://94d0da10.sibforms.com/serve/MUIFAGKMW1tPE1BFE0dG2nZTy-dMmay-4m6hXLvOUFn5KJSEvzx5FyG8wUwq-rq1ApmpISDPqowY1XcT5Brk1sU35z6SRoa0S6Gi_OUbHuFFf2ilukR073qR9WXLkw5INpisEnJxciHwHCgSVpS075fulO0YtaBjEbx8HvlrY0ALy_vGZDWghrjfNDTKOuLgnu_ZXBK7Gug6HomtoA=="
+          method="POST"
+          target="brevo-target"
+          id="auditForm"
+          novalidate>
+      <!-- Honeypot anti-spam Brevo (doit rester vide) -->
+      <input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      <input type="hidden" name="locale" value="fr">
+      <input type="hidden" name="html_type" value="simple">
 
       <div class="form-row">
         <div class="form-field form-field-dark">
           <label for="audit-prenom">Prénom</label>
-          <input class="form-input form-input-dark" type="text" id="audit-prenom" name="firstname" placeholder="Votre prénom" required autocomplete="given-name">
+          <input class="form-input form-input-dark" type="text" id="audit-prenom" name="PRENOM" placeholder="Votre prénom" required autocomplete="given-name">
         </div>
         <div class="form-field form-field-dark">
           <label for="audit-email">Email</label>
-          <input class="form-input form-input-dark" type="email" id="audit-email" name="email" placeholder="vous@exemple.fr" required autocomplete="email">
+          <input class="form-input form-input-dark" type="email" id="audit-email" name="EMAIL" placeholder="vous@exemple.fr" required autocomplete="email">
         </div>
+      </div>
+
+      <div class="form-field form-field-dark form-field-full">
+        <label for="audit-linkedin">URL LinkedIn <span class="label-optional">(optionnel — accélère votre audit)</span></label>
+        <input class="form-input form-input-dark" type="url" id="audit-linkedin" name="LINKEDIN" placeholder="https://linkedin.com/in/votre-profil" autocomplete="url">
       </div>
 
       <button type="submit" class="btn-or">Je veux mon mini-audit offert →</button>
@@ -1189,6 +1210,8 @@
     <div class="form-success" id="auditSuccess" role="status">
       ✦ Demande reçue — je vous envoie votre audit sous 24h. Gardez un œil sur votre boîte mail.
     </div>
+    <!-- Iframe cachée qui reçoit la réponse de Brevo (l'utilisateur reste sur la page) -->
+    <iframe name="brevo-target" id="brevo-target" style="display:none;width:0;height:0;border:0" aria-hidden="true" tabindex="-1"></iframe>
   </div>
 </section>
 
@@ -1223,8 +1246,10 @@
     <div class="divider-or"><div class="divider-or-dot"></div></div>
     <p class="contact-intro">Vous avez un projet de lancement, une page à rédiger, un profil à muscler&nbsp;? Décrivez-moi votre besoin — je vous réponds sous 48h.</p>
 
-    <form class="contact-form" action="#FORMSPREE_URL" method="POST" id="contactForm" novalidate>
+    <form class="contact-form" action="https://formspree.io/f/xpqbpvje" method="POST" id="contactForm" novalidate>
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="hidden" name="_subject" value="✉ Nouvelle demande NaoWin via le site">
+      <input type="hidden" name="_language" value="fr">
 
       <div class="form-row">
         <div class="form-field form-field-light">
@@ -1326,92 +1351,4 @@
     if (!toggle.contains(e.target) && !menu.contains(e.target)) closeMenu();
   });
 
-  /* ── Nav scrolled state ── */
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.style.borderBottomColor = window.scrollY > 60
-      ? 'rgba(252,198,83,0.22)'
-      : 'rgba(252,198,83,0.12)';
-  }, { passive: true });
-
-  /* ── Validation ── */
-  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
-
-  function showError(input, msg) {
-    clearError(input);
-    input.style.borderColor = '#e85c6e';
-    const span = document.createElement('span');
-    span.className = 'field-error';
-    span.textContent = msg;
-    input.parentNode.appendChild(span);
-  }
-  function clearError(input) {
-    const existing = input.parentNode.querySelector('.field-error');
-    if (existing) existing.remove();
-    input.style.borderColor = '';
-  }
-  function clearErrors(form) {
-    form.querySelectorAll('input, textarea, select').forEach(clearError);
-  }
-
-  /* ── Formulaire audit ── */
-  const auditForm    = document.getElementById('auditForm');
-  const auditSuccess = document.getElementById('auditSuccess');
-
-  auditForm.addEventListener('submit', function(e) {
-    // Si l'action est encore le placeholder, on intercepte pour démo
-    if (this.action.includes('#SYSTEME_IO_FORM_URL')) e.preventDefault();
-
-    clearErrors(this);
-    const prenom = this.querySelector('#audit-prenom');
-    const email  = this.querySelector('#audit-email');
-    let valid = true;
-
-    if (!prenom.value.trim()) {
-      showError(prenom, 'Merci d\'entrer votre prénom.');
-      valid = false;
-    }
-    if (!isValidEmail(email.value)) {
-      showError(email, 'Adresse email invalide.');
-      valid = false;
-    }
-    if (!valid) return;
-
-    // Retour visuel (remplacé par la vraie soumission une fois l'URL systeme.io ajoutée)
-    this.style.display = 'none';
-    auditSuccess.style.display = 'block';
-  });
-
-  /* ── Formulaire contact ── */
-  const contactForm    = document.getElementById('contactForm');
-  const contactSuccess = document.getElementById('contactSuccess');
-
-  contactForm.addEventListener('submit', function(e) {
-    if (this.action.includes('#FORMSPREE_URL')) e.preventDefault();
-
-    clearErrors(this);
-    const nom     = this.querySelector('#contact-nom');
-    const email   = this.querySelector('#contact-email');
-    const message = this.querySelector('#contact-message');
-    let valid = true;
-
-    if (!nom.value.trim()) {
-      showError(nom, 'Merci d\'entrer votre nom.');
-      valid = false;
-    }
-    if (!isValidEmail(email.value)) {
-      showError(email, 'Adresse email invalide.');
-      valid = false;
-    }
-    if (message.value.trim().length < 20) {
-      showError(message, 'Merci de décrire votre projet (20 caractères minimum).');
-      valid = false;
-    }
-    if (!valid) return;
-
-    this.style.display = 'none';
-    contactSuccess.style.display = 'block';
-  });
-</script>
-</body>
-</html>
+  /* ── Nav scrolled state
