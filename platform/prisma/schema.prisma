@@ -1,0 +1,289 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────────────────────────
+
+enum CompanyUserRole {
+  OWNER
+  MEMBER
+}
+
+enum QuestionPhase {
+  PROBLEM
+  EXPERIENCE
+  RESULT
+  RECOMMENDATION
+}
+
+enum CaptureSessionStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  EXPIRED
+}
+
+enum TestimonialStatus {
+  DRAFT // capture en cours
+  PROCESSING // transcription / synthèse en cours
+  COLLECTED // validé par le client, en attente de décision de publication
+  PUBLISHED
+  ARCHIVED
+}
+
+enum VideoAssetStatus {
+  UPLOADING
+  READY
+  ERROR
+}
+
+enum RewardCodeType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+
+enum RewardCodeStatus {
+  ISSUED
+  REDEEMED
+  EXPIRED
+}
+
+enum SetupFeeStatus {
+  PENDING
+  PAID
+}
+
+// ─────────────────────────────────────────────────────────────
+// Entreprise cliente
+// ─────────────────────────────────────────────────────────────
+
+model Company {
+  id            String   @id @default(uuid())
+  name          String
+  slug          String   @unique
+  logoUrl       String?
+  brandColor    String?
+  stripeCustomerId String? @unique
+  setupFeePaidAt   DateTime?
+  rewardType    RewardCodeType? @default(PERCENTAGE)
+  rewardValue   Decimal?        @db.Decimal(10, 2)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  users            CompanyUser[]
+  questions        Question[]
+  captureSessions  CaptureSession[]
+  testimonials     Testimonial[]
+  downloads        Download[]
+  pricingTiers     PricingTier[]
+  billingAccount   BillingAccount?
+
+  @@map("companies")
+}
+
+model CompanyUser {
+  id         String          @id @default(uuid())
+  companyId  String
+  company    Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  clerkUserId String         @unique
+  email      String
+  role       CompanyUserRole @default(MEMBER)
+  createdAt  DateTime        @default(now())
+
+  downloads  Download[]
+
+  @@index([companyId])
+  @@map("company_users")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Questions (template par entreprise, historisé)
+// ─────────────────────────────────────────────────────────────
+
+model Question {
+  id                 String        @id @default(uuid())
+  companyId          String
+  company            Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  phase              QuestionPhase
+  promptText         String
+  orderIndex         Int
+  minDurationSeconds Int           @default(8)
+  active             Boolean       @default(true)
+  createdAt          DateTime      @default(now())
+
+  answers TestimonialAnswer[]
+
+  @@index([companyId, active])
+  @@map("questions")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Session de capture (lien / QR envoyé à un client final)
+// ─────────────────────────────────────────────────────────────
+
+model CaptureSession {
+  id         String               @id @default(uuid())
+  companyId  String
+  company    Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  token      String               @unique
+  clientName String?
+  status     CaptureSessionStatus @default(PENDING)
+  expiresAt  DateTime
+  createdAt  DateTime             @default(now())
+
+  testimonial Testimonial?
+  rewardCode  RewardCode?
+
+  @@index([companyId])
+  @@map("capture_sessions")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Témoignage
+// ─────────────────────────────────────────────────────────────
+
+model Testimonial {
+  id               String            @id @default(uuid())
+  captureSessionId String            @unique
+  captureSession   CaptureSession    @relation(fields: [captureSessionId], references: [id], onDelete: Cascade)
+  companyId        String
+  company          Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  status           TestimonialStatus @default(DRAFT)
+  synthesisText    String?
+
+  consentGivenAt     DateTime?
+  consentIp          String?
+  consentTextVersion Int?
+
+  archivedReason String?
+
+  createdAt   DateTime  @default(now())
+  publishedAt DateTime?
+  archivedAt  DateTime?
+
+  answers   TestimonialAnswer[]
+  downloads Download[]
+
+  @@index([companyId, status])
+  @@map("testimonials")
+}
+
+model TestimonialAnswer {
+  id                  String      @id @default(uuid())
+  testimonialId       String
+  testimonial         Testimonial @relation(fields: [testimonialId], references: [id], onDelete: Cascade)
+  questionId          String
+  question             Question    @relation(fields: [questionId], references: [id])
+  transcriptText      String?
+  durationSeconds     Int?
+  qualityCheckPassed  Boolean     @default(false)
+  retakeCount         Int         @default(0)
+  createdAt           DateTime    @default(now())
+
+  videoAsset VideoAsset?
+
+  @@unique([testimonialId, questionId])
+  @@index([testimonialId])
+  @@map("testimonial_answers")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Vidéo (métadonnées uniquement — le fichier vit chez le fournisseur)
+// ─────────────────────────────────────────────────────────────
+
+model VideoAsset {
+  id                   String            @id @default(uuid())
+  testimonialAnswerId  String            @unique
+  testimonialAnswer    TestimonialAnswer @relation(fields: [testimonialAnswerId], references: [id], onDelete: Cascade)
+  provider             String            @default("cloudflare_stream")
+  externalUid          String            @unique
+  playbackId           String?
+  status               VideoAssetStatus  @default(UPLOADING)
+  durationSeconds      Int?
+  watermarkApplied     Boolean           @default(false)
+  createdAt            DateTime          @default(now())
+  deletedAt            DateTime?
+
+  @@map("video_assets")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Récompense
+// ─────────────────────────────────────────────────────────────
+
+model RewardCode {
+  id               String            @id @default(uuid())
+  captureSessionId String            @unique
+  captureSession   CaptureSession    @relation(fields: [captureSessionId], references: [id], onDelete: Cascade)
+  companyId        String
+  code             String            @unique
+  type             RewardCodeType
+  value            Decimal           @db.Decimal(10, 2)
+  status           RewardCodeStatus  @default(ISSUED)
+  issuedAt         DateTime          @default(now())
+  redeemedAt       DateTime?
+  expiresAt        DateTime?
+
+  @@index([companyId])
+  @@map("reward_codes")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Téléchargement facturé
+// ─────────────────────────────────────────────────────────────
+
+model Download {
+  id                  String      @id @default(uuid())
+  testimonialId       String
+  testimonial         Testimonial @relation(fields: [testimonialId], references: [id])
+  companyId           String
+  company             Company     @relation(fields: [companyId], references: [id])
+  companyUserId       String
+  companyUser         CompanyUser @relation(fields: [companyUserId], references: [id])
+  unitPriceCents      Int
+  billingMonth        String // format "YYYY-MM"
+  stripeUsageEventId  String?
+  createdAt           DateTime    @default(now())
+
+  @@index([companyId, billingMonth])
+  @@map("downloads")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Grille tarifaire (globale par défaut, ou négociée par entreprise)
+// ─────────────────────────────────────────────────────────────
+
+model PricingTier {
+  id              String   @id @default(uuid())
+  companyId       String?
+  company         Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  minVolume       Int
+  maxVolume       Int?
+  unitPriceCents  Int
+  effectiveFrom   DateTime @default(now())
+
+  @@index([companyId])
+  @@map("pricing_tiers")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Compte de facturation Stripe
+// ─────────────────────────────────────────────────────────────
+
+model BillingAccount {
+  id                   String         @id @default(uuid())
+  companyId            String         @unique
+  company              Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  setupFeeStatus       SetupFeeStatus @default(PENDING)
+
+  @@map("billing_accounts")
+}
