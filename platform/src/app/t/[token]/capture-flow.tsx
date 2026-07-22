@@ -90,6 +90,7 @@ export function CaptureFlow({ token }: { token: string }) {
       return;
     }
     setRetakeMessage(null);
+    setErrorMessage(null);
     setIsBusy(true);
     try {
       const uploadRes = await fetch(`/api/capture/${token}/upload-url`, {
@@ -185,6 +186,8 @@ export function CaptureFlow({ token }: { token: string }) {
         </p>
         <h2>{question.promptText}</h2>
         {retakeMessage && <p style={{ color: "#9d2131" }}>{retakeMessage}</p>}
+        {errorMessage && <p style={{ color: "#9d2131" }}>{errorMessage}</p>}
+        {isBusy && <p>Envoi en cours…</p>}
         <Recorder
           minDurationSeconds={question.minDurationSeconds}
           disabled={isBusy}
